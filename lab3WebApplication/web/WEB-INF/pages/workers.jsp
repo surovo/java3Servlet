@@ -66,6 +66,7 @@ function goToContracts(id) {
         <td>Всего Налогов</td>
         <td>Итого</td>
         <td>Действие</td>
+        <td>Правка и контракты</td>
     </tr>
 <%Iterator itr;%>
 <% ArrayList data= (ArrayList)request.getAttribute("accountList");
@@ -93,7 +94,7 @@ for (itr=data.iterator(); itr.hasNext(); )
 <td>
 
     <form name="contractsForm" action="<%=request.getContextPath()+"/contracts"%>" method="get" align = "center">
-        <input type="button" value="Удалить" onclick="goToContracts( <%= w.getUniqueWorkerId() %> );">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="button" value="Перейти к контрактам" onclick="goToContracts( <%= w.getUniqueWorkerId() %> );">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     </form>
 
 </td>
