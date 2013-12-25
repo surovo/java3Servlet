@@ -16,28 +16,27 @@
         <title>Пример веб-приложения на JSP и сервлетах</title>
 
         <script language="javascript">
+            
 function deleteWorker(id){
-    var f=document.form;
-    f.method="post";
-    f.action='deleteworker?id='+id;
-    f.submit();
+    document.deleteWorkerForm.action = "<%=request.getContextPath()+"/deleteWorker"%>"+"?id="+id;
+    document.deleteWorkerForm.submit();
 }
 
 function checkNameAndAdd()
-            {
+{
                    if (chkEdit()) {
                           
                           document.newWorkerForm.submit(); 
                    }
-            }
+}
 
-            function chkEdit()
-            {
-             if (document.newWorkerForm.nameField.value=="")
+function chkEdit()
+{
+     if (document.newWorkerForm.nameField.value=="")
                  return false;
-             else
+     else
                  return true;
-            }
+}
 
         </script>
         
@@ -79,11 +78,11 @@ for (itr=data.iterator(); itr.hasNext(); )
 <td> <%= w.getLevy() %></td>
 <td><%= w.getTotalWithDate(null, null) %> </td>
 <td>
-    <form action="${pageContext.request.contextPath}/deletionsTest" method="post">
-        <input type="submit" name="button1" onclick="" value="Удалить" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</form>
 
-   <!--<input type="submit" value="Удалить запись" onclick="deleteWorker(<%= w.getUniqueWorkerId()%>)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+    <form name="deleteWorkerForm" action="<%=request.getContextPath()+"/deleteWorker"%>" method="post" align = "center">
+        <input type="button" value="Удалить" onclick="deleteWorker( <%= w.getUniqueWorkerId() %> );">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </form>
+
 </td>
 </tr>
 <%} %>

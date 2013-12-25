@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ControllerServlet",
         loadOnStartup = 1,
-        urlPatterns = {"/workers", "/deletionsTest", "/addWorker"})
+        urlPatterns = {"/workers", "/deleteWorker", "/addWorker"})
 public class ControllerServlet extends HttpServlet {
 
     /**
@@ -121,7 +121,7 @@ public class ControllerServlet extends HttpServlet {
             throws ServletException, IOException {
         
                 String userPath = request.getServletPath();
-                Map p = request.getParameterMap();
+                
          if (userPath.equals("/addWorker")) {
             String name = (String) request.getParameter("nameField");
                     try {
@@ -133,6 +133,15 @@ public class ControllerServlet extends HttpServlet {
                     } catch (Exception ex) {
                                 ex.printStackTrace();
                     }
+        } else if (userPath.equals("/deleteWorker"))  {
+            String id = (String) request.getParameter("id");
+                    try {
+                        UFNS.getInstance().removeWorkerWithId(Long.parseLong(id));
+                    } catch (WrongNumberValueException ex) {
+                        Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+            String url = "workers";
+            response.sendRedirect(url);
         }
         
     }
