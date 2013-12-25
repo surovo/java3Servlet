@@ -80,11 +80,6 @@ public class ControllerServlet extends HttpServlet {
 
         // if cart page is requested
         } else if (userPath.equals("/workers")) {
-            try {
-                UFNS.getInstance().addWorkerWithName("test");
-            } catch (WrongNumberValueException ex) {
-                Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
                ArrayList<Worker> accounts = new ArrayList(UFNS.getInstance().getAllWorkers());
                ServletContext sc = getServletContext();
                RequestDispatcher rd = sc.getRequestDispatcher(userPath);
@@ -131,8 +126,8 @@ public class ControllerServlet extends HttpServlet {
             String name = (String) request.getParameter("nameField");
                     try {
                         UFNS.getInstance().addWorkerWithName(name);
-                            String url = "/WEB-INF/pages" + "/workers" + ".jsp";
-                            request.getRequestDispatcher(url).forward(request, response);
+                            String url = "workers";
+                            response.sendRedirect(url);
                     } catch (WrongNumberValueException ex) {
                         Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (Exception ex) {

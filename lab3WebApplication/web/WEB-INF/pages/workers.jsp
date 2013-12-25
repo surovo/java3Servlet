@@ -44,7 +44,7 @@ function checkNameAndAdd()
     </head>
     <body>
 
-<form name="newWorkerForm" action="<%=request.getContextPath()+"/addWorker"%>" method="post">
+<form name="newWorkerForm" action="<%=request.getContextPath()+"/addWorker"%>" method="post" align = "center">
     Имя нового сотрудника: <input type="text" size="35"  name="nameField">
     <input type="button" value="Добавить запись" onclick="checkNameAndAdd();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </form>
