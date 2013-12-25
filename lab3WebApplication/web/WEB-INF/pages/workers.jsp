@@ -38,6 +38,11 @@ function chkEdit()
                  return true;
 }
 
+function goToContracts(id) {
+    document.contractsForm.action = "<%=request.getContextPath()+"/contracts"%>"+"?id="+id;
+    document.contractsForm.submit();
+}
+
         </script>
         
     </head>
@@ -84,6 +89,15 @@ for (itr=data.iterator(); itr.hasNext(); )
     </form>
 
 </td>
+
+<td>
+
+    <form name="contractsForm" action="<%=request.getContextPath()+"/contracts"%>" method="get" align = "center">
+        <input type="button" value="Удалить" onclick="goToContracts( <%= w.getUniqueWorkerId() %> );">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </form>
+
+</td>
+
 </tr>
 <%} %>
 

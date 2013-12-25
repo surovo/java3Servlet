@@ -29,7 +29,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ControllerServlet",
         loadOnStartup = 1,
-        urlPatterns = {"/workers", "/deleteWorker", "/addWorker"})
+        urlPatterns = {"/workers", 
+            "/deleteWorker", 
+            "/addWorker", 
+            "/contracts"
+        })
 public class ControllerServlet extends HttpServlet {
 
     /**
@@ -84,19 +88,9 @@ public class ControllerServlet extends HttpServlet {
                ServletContext sc = getServletContext();
                RequestDispatcher rd = sc.getRequestDispatcher(userPath);
                request.setAttribute("accountList", accounts );
-        } else if (userPath.equals("/checkout")) {
-            // TODO: Implement checkout page request
-
-        // if user switches language
-        } else if (userPath.equals("/deletionsTest")) {
-            try {
-                UFNS.getInstance().removeWorkerWithId(1);
-            } catch (WrongNumberValueException ex) {
-                Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-
-        }
+        } else if (userPath.equals("/contracts")) {
+               String name = (String) request.getParameter("id"); 
+        } 
 
         // use RequestDispatcher to forward request internally
         String url = "/WEB-INF/pages" + userPath + ".jsp";

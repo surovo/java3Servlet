@@ -10,5 +10,9 @@
             <url-pattern>/workers.jsp</url-pattern>
             <url-pattern>/WEB-INF/pages/*</url-pattern>
         </jsp-property-group>
+        <jsp-property-group>
+            <url-pattern>/contracts.jsp</url-pattern>
+            <url-pattern>/WEB-INF/pages/*</url-pattern>
+        </jsp-property-group>
     </jsp-config>
 </web-app>
