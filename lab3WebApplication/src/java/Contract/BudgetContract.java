@@ -6,6 +6,11 @@ package Contract;
 
 import java.util.Date;
 import Exceptions.WrongNumberValueException;
+import Payments.AbstractPayment;
+import Payments.PayCheck13;
+import java.util.Iterator;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 
 
@@ -15,7 +20,11 @@ import Exceptions.WrongNumberValueException;
  */
 public class BudgetContract extends AbstractContract{
     
-
+    public BudgetContract(JSONObject obj) {
+        super (obj);
+        contractUniqueId = this.getContractUniqueId();
+        ++contractUniqueId;
+    }
     
     public BudgetContract(String workPlace, String post) {
         super(workPlace, post);
@@ -36,6 +45,23 @@ public class BudgetContract extends AbstractContract{
     }
 
    
+     @Override
+    public void loadParamsFromJson(JSONObject obj) {
+
+        JSONArray jsonPayments = (JSONArray) obj.get("payments");
+        for (Iterator<JSONObject> it = jsonPayments.iterator(); it.hasNext();) {
+            JSONObject ap = it.next();
+            AbstractPayment newPay = new PayCheck13(ap);
+            this.payments.add(newPay);
+        }
+      
+          
+          this.workPlace = (String) obj.get("workPlace");
+          this.post = (String) obj.get("post");
+          this.validDate = (Date) obj.get("validDate");
+          this.forever = Boolean.parseBoolean( (String) obj.get("forever"));
+
+    }
 
 
 

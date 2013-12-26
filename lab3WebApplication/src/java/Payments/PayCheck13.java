@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import Exceptions.WrongNumberValueException;
+import org.json.simple.JSONObject;
 
 
 /**
@@ -27,7 +28,26 @@ public class PayCheck13 extends AbstractPayment{
         super(payment, description, dateOfPayment);
     }
 
+    public PayCheck13(JSONObject ap) {
+        super(ap);
+    }
+
+    @Override
+    public void loadParamsFromJson(JSONObject obj) {
+      
+          this.paymentSum = Double.parseDouble((String) obj.get("paymentSum"));
+          this.levyValue =  Double.parseDouble((String)obj.get("levyValue"));
+          this.name = (String) obj.get("name");
+          Date date;
+        try {
+            DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+            date = df.parse((String)obj.get("paymentDate"));
+        } catch (ParseException ex) {
+            date = new Date();
+        }
+          this.paymentDate = date ;
 
 
+    }
 
 }

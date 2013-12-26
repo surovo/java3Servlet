@@ -5,7 +5,7 @@
 package interfaces;
 
 import Exceptions.WrongNumberValueException;
-//import org.json.simple.JSONObject;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -13,11 +13,11 @@ import Exceptions.WrongNumberValueException;
  */
 public interface JSONObjectInterface {
     
-//    public JSONObject getJSONObject();
-//    
-//    /**
-//     *
-//     * @return
-//     */
-//    public void loadParamsFromJson(JSONObject obj);
+    public JSONObject getJSONObject();
+    
+    /**
+     *
+     * @return
+     */
+    public void loadParamsFromJson(JSONObject obj);
 }

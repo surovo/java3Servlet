@@ -16,12 +16,14 @@ import java.util.Iterator;
 import java.util.List;
 import Exceptions.WrongNumberValueException;
 import Payments.AbstractPayment;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  *
  * @author novyjpolzovatel
  */
-public abstract class AbstractContract implements LevyInterface{
+public abstract class AbstractContract implements LevyInterface , JSONObjectInterface{
     static long contractUniqueId = 0;
     public List<AbstractPayment> payments;
     protected String workPlace = "";
@@ -41,6 +43,12 @@ public abstract class AbstractContract implements LevyInterface{
         this.payments = new ArrayList<AbstractPayment>();
         contractUniqueId++;
         this.forever = true;
+    }
+    
+    public AbstractContract(JSONObject obj) {
+        this.payments = new ArrayList<AbstractPayment>();
+        this.loadParamsFromJson(obj);
+        contractUniqueId++;
     }
     /**
      * 
@@ -160,6 +168,26 @@ public abstract class AbstractContract implements LevyInterface{
             returnValue += ap.getRawSummWithDate( start,  end);
         }
         return returnValue;
+    }
+    
+    
+     @Override
+    public JSONObject getJSONObject() {
+              JSONObject obj=new JSONObject();
+              JSONArray list = new JSONArray();
+        for (Iterator<AbstractPayment> it = this.payments.iterator(); it.hasNext();) {
+            AbstractPayment ap = it.next();
+            list.add(ap.getJSONObject());
+        }
+              obj.put("payments",list);
+              obj.put("id",this.getContractUniqueId());
+              obj.put("workPlace",this.workPlace);
+              obj.put("post",this.post);
+              obj.put("validDate",this.validDate);
+              obj.put("forever", new Boolean(this.forever));
+              
+              return obj;
+
     }
     
        

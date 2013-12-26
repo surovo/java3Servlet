@@ -18,6 +18,9 @@ import Contract.AbstractContract;
 import Exceptions.WrongNumberValueException;
 import Payments.AbstractPayment;
 import Payments.PayCheck13;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 //import org.json.simple.JSONArray;
 //import org.json.simple.JSONObject;
 //import org.json.simple.parser.JSONParser;
@@ -126,61 +129,61 @@ public class UFNS extends Observable implements  JSONObjectInterface{
     
     //================================================================
 
-//    @Override
-//    public JSONObject getJSONObject() {
-//       JSONObject obj=new JSONObject();
-//              JSONArray list = new JSONArray();
-//        for (Iterator<Worker> it = this.getAllWorkers().iterator(); it.hasNext();) {
-//            Worker w = it.next();
-//            list.add(w.getJSONObject());
-//        }
-//              obj.put("workers",list);
-//              return obj;
-//    }
-//    
-//    public void readFromJSON(String filename) throws WrongNumberValueException  {
-//        JSONParser parser = new JSONParser();
-// 
-//	try {
-// 
-//		Object obj = parser.parse(new FileReader(filename));
-// 
-//		JSONObject jsonObject = (JSONObject) obj;
-// 
-//		this.loadParamsFromJson(jsonObject);
-// 
-// 
-//	} catch (FileNotFoundException e) {
-////		e.printStackTrace();
-//            this.clearAll();
-//            throw new WrongNumberValueException("Не удалось прочитать из файла");
-//	} catch (IOException e) {
-//            this.clearAll();
-//            throw new WrongNumberValueException("Не удалось прочитать из файла");
-//        
-//	} catch (org.json.simple.parser.ParseException e) {
-//            this.clearAll();
-//            throw new WrongNumberValueException("Не удалось прочитать из файла");
-//            
-////            e.printStackTrace();
-//	}
-//    }
-//
-//    @Override
-//    public void loadParamsFromJson(JSONObject obj)  {
-//        JSONArray jsonWorkers = (JSONArray) obj.get("workers");
-//        for (Iterator<JSONObject> it = jsonWorkers.iterator(); it.hasNext();) {
-//            JSONObject w = it.next();
-//            Worker newWorker = new Worker(w);
-//            try {
-//                this.addWorker(newWorker);
-//            } catch (WrongNumberValueException ex) {
-//                ex.printStackTrace();
-//            }
-//        }
-//        setChanged();
-//        notifyObservers();
-//    }
+    @Override
+    public JSONObject getJSONObject() {
+       JSONObject obj=new JSONObject();
+              JSONArray list = new JSONArray();
+        for (Iterator<Worker> it = this.getAllWorkers().iterator(); it.hasNext();) {
+            Worker w = it.next();
+            list.add(w.getJSONObject());
+        }
+              obj.put("workers",list);
+              return obj;
+    }
+    
+    public void readFromJSON(String filename) throws WrongNumberValueException  {
+        JSONParser parser = new JSONParser();
+ 
+	try {
+ 
+		Object obj = parser.parse(new FileReader(filename));
+ 
+		JSONObject jsonObject = (JSONObject) obj;
+ 
+		this.loadParamsFromJson(jsonObject);
+ 
+ 
+	} catch (FileNotFoundException e) {
+//		e.printStackTrace();
+            this.clearAll();
+            throw new WrongNumberValueException("Не удалось прочитать из файла");
+	} catch (IOException e) {
+            this.clearAll();
+            throw new WrongNumberValueException("Не удалось прочитать из файла");
+        
+	} catch (org.json.simple.parser.ParseException e) {
+            this.clearAll();
+            throw new WrongNumberValueException("Не удалось прочитать из файла");
+            
+//            e.printStackTrace();
+	}
+    }
+
+    @Override
+    public void loadParamsFromJson(JSONObject obj)  {
+        JSONArray jsonWorkers = (JSONArray) obj.get("workers");
+        for (Iterator<JSONObject> it = jsonWorkers.iterator(); it.hasNext();) {
+            JSONObject w = it.next();
+            Worker newWorker = new Worker(w);
+            try {
+                this.addWorker(newWorker);
+            } catch (WrongNumberValueException ex) {
+                ex.printStackTrace();
+            }
+        }
+        setChanged();
+        notifyObservers();
+    }
     
     
 

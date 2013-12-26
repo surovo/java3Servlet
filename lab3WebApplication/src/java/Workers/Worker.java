@@ -17,9 +17,11 @@ import Contract.AbstractContract;
 import Contract.BudgetContract;
 import Contract.FinanceContract;
 import Exceptions.WrongNumberValueException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 
-public class Worker implements LevyInterface /*,Comparable*/{
+public class Worker implements LevyInterface , JSONObjectInterface{
     
 //    // Integration with the overall application
 //enum WorkerType {
@@ -38,6 +40,12 @@ public class Worker implements LevyInterface /*,Comparable*/{
     public Worker() {
         this.name = "";
         this.currentWorkerId = ++uniqueWorkerId;
+    }
+    
+    public Worker(JSONObject obj) {
+        this.loadParamsFromJson(obj);
+        uniqueWorkerId = this.getUniqueWorkerId();
+        ++uniqueWorkerId;
     }
      
     public Worker(String name) throws WrongNumberValueException {
@@ -192,6 +200,49 @@ public class Worker implements LevyInterface /*,Comparable*/{
             value += c.getRawSummWithDate(start, end);
        }
        return value;
+    }
+    
+    //===
+        @Override
+    public JSONObject getJSONObject() {
+        JSONObject obj=new JSONObject();
+              JSONArray list = new JSONArray();
+        for (Iterator<AbstractContract> it = this.contractsTable.values().iterator(); it.hasNext();) {
+            AbstractContract ac = it.next();
+            list.add(ac.getJSONObject());
+        }
+              obj.put("contractsTable",list);
+              obj.put("currentWorkerId",Long.toString(this.getUniqueWorkerId()));
+
+              obj.put("middleName",this.middleName);
+              obj.put("surName",this.surName);
+              obj.put("name",this.name);
+              obj.put("budget", this.budget);
+
+              
+              return obj;
+    }
+
+    @Override
+    public void loadParamsFromJson(JSONObject obj) {
+        JSONArray jsonContracts = (JSONArray) obj.get("contractsTable");
+        for (Iterator<JSONObject> it = jsonContracts.iterator(); it.hasNext();) {
+            JSONObject c = it.next();
+            AbstractContract contract;
+            if (Long.parseLong((String) c.get("id")) == 0) {
+                contract = new BudgetContract(c);
+                this.contractsTable.put(Long.toString(contract.getContractUniqueId()), contract);
+            } else {
+                contract = new FinanceContract(c);
+                this.contractsTable.put(Long.toString(contract.getContractUniqueId()), contract);
+            }
+                
+        }
+      
+          this.currentWorkerId = Long.parseLong((String)obj.get("currentWorkerId")); ;
+          this.middleName = (String) obj.get("middleName");
+          this.surName = (String) obj.get("surName");
+          this.name = (String) obj.get("name");
     }
 
     

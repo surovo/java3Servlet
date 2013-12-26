@@ -14,13 +14,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import Exceptions.WrongNumberValueException;
+import org.json.simple.JSONObject;
 //import org.json.simple.JSONObject;
 
 /**
  *
  * @author Kozodoy Ivan
  */
-  abstract public class AbstractPayment implements LevyInterface{
+  abstract public class AbstractPayment implements LevyInterface , JSONObjectInterface{
     
     protected double paymentSum = 0.;
     protected double levyValue = 0.;
@@ -33,6 +34,11 @@ import Exceptions.WrongNumberValueException;
      * @param description - описание выплаты
      * @throws WrongNumberValueException 
      */
+    
+    public AbstractPayment(JSONObject obj) {
+        this.loadParamsFromJson(obj);
+    }
+    
     
     public AbstractPayment(double payment, String description, Date dateOfPayment) throws WrongNumberValueException {
         
@@ -136,6 +142,18 @@ import Exceptions.WrongNumberValueException;
             return 0.;
         }
 
+    }
+    
+    @Override
+    public JSONObject getJSONObject() {
+          JSONObject obj=new JSONObject();
+          DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+          obj.put("paymentSum",this.paymentSum);
+          obj.put("levyValue",this.levyValue);
+          obj.put("name",this.name);
+          obj.put("paymentDate",df.format(this.paymentDate));
+
+          return obj;
     }
 
 }
