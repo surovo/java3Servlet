@@ -145,6 +145,7 @@ public class ControllerServlet extends HttpServlet {
             String name = (String) request.getParameter("nameField");
                     try {
                         UFNS.getInstance().addWorkerWithName(name);
+                        this.save();
                             String url = "workers";
                             response.sendRedirect(url);
                     } catch (WrongNumberValueException ex) {
@@ -156,6 +157,7 @@ public class ControllerServlet extends HttpServlet {
             String id = (String) request.getParameter("id");
                     try {
                         UFNS.getInstance().removeWorkerWithId(Long.parseLong(id));
+                        this.save();
                     } catch (WrongNumberValueException ex) {
                         Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -164,18 +166,6 @@ public class ControllerServlet extends HttpServlet {
         }
         
     }
-    
-        @Override
-    public void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String userPath = req.getServletPath();
-        if (userPath.equals("/deletionsTest")) {
-            try {
-                UFNS.getInstance().removeWorkerWithId(1);
-            } catch (WrongNumberValueException ex) {
-                Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    };
 
     /**
      * Returns a short description of the servlet.
@@ -188,9 +178,8 @@ public class ControllerServlet extends HttpServlet {
     }// </editor-fold>
 
     
-    @Override
-    public void destroy(){
-                    String filePath;
+    private void save() {
+                            String filePath;
                     filePath = "/Users/ivan/Desktop/ufns.json";
                     JSONObject obj = UFNS.getInstance().getJSONObject();
                     try {
@@ -202,8 +191,8 @@ public class ControllerServlet extends HttpServlet {
 
                     } catch (IOException ex) {
                             ex.printStackTrace();
-                    } finally {
-                        super.destroy();
-                    }
+                    } 
+    
     }
+   
 }
