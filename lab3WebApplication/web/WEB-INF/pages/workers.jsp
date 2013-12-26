@@ -16,49 +16,7 @@
         <title>Пример веб-приложения на JSP и сервлетах</title>
 
         <script language="javascript">
-         
-    
-        function makeRequest(url,nz,tgt)
-        {
-
-	var httpRequest;
-
-	if (window.XMLHttpRequest) { // Mozilla, Safari, ...
-		httpRequest = new XMLHttpRequest();
-		if (httpRequest.overrideMimeType) {
-			httpRequest.overrideMimeType('text/xml');
-					}
-	}
-	else if (window.ActiveXObject) { // IE
-		try {
-			httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
-		}
-		catch (e) {
-			try {
-				httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
-			}
-			catch (e) {}
-		}
-	}
-
-	if ((httpRequest==null)||(httpRequest==undefined)) {
-		tgt.innerHTML='Невозможно создать XML-объект!';
-		return false;
-	}
-
-	httpRequest.onreadystatechange = function() { alertContents(httpRequest,tgt); };
-	httpRequest.open('GET', url+'?id='+nz, true);
-	httpRequest.send('');
-
-}
-/* Значения readyState
-0 (Неинициализирован)
-1 (Инициализирован)
-2 (Отправлен)
-3 (Загружается)
-4 (Загружен)
- */
-            
+                
 function deleteWorker(id, form){
     document.forms["deleteWorkerForm"+id].action = "<%=request.getContextPath()+"/deleteWorker"%>"+"?id="+id;
     document.forms["deleteWorkerForm"+id].submit();
@@ -130,7 +88,6 @@ for (itr=data.iterator(); itr.hasNext(); )
 <td>
 
     <form name="contractsForm<%= w.getUniqueWorkerId() %>" action="<%=request.getContextPath()+"/contracts"%>" method="get" align = "center">
-        <!--<input type="button" value="ghfdbnm" onclick="makeRequest(' <%= request.getContextPath()+"/deleteWorker" %> ' , ' <%= w.getUniqueWorkerId() %> ' , null );">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
         <input type="button" value="Править" onclick="showContracts( <%=  w.getUniqueWorkerId() %> );">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <input type="hidden" name="id" value=<%=  w.getUniqueWorkerId() %>>
     </form>

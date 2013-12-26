@@ -34,7 +34,8 @@ import org.json.simple.JSONObject;
         urlPatterns = {"/workers", 
             "/deleteWorker", 
             "/addWorker", 
-            "/contracts"
+            "/contracts",
+            "/editWorker"
         })
 public class ControllerServlet extends HttpServlet {
 
@@ -163,6 +164,24 @@ public class ControllerServlet extends HttpServlet {
                     }
             String url = "workers";
             response.sendRedirect(url);
+        } else if (userPath.equals("/editWorker")) {
+            String id = (String) request.getParameter("id");
+            String name = (String) request.getParameter("name");
+                    try {
+                        Worker w = UFNS.getInstance().getWorkerWithId(Long.parseLong(id));
+                        w.setWorkerName(name);
+                        this.save();
+                        ArrayList<AbstractContract> contracts;
+                        contracts = new ArrayList(UFNS.getInstance().getAllContractsForWorkerWithId(Long.parseLong(id)));
+                        ServletContext sc = getServletContext();
+                        RequestDispatcher rd = sc.getRequestDispatcher(userPath);
+                        String url = "contracts?id="+id;
+                        response.sendRedirect(url);
+                    } catch (WrongNumberValueException ex) {
+                        Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+
         }
         
     }

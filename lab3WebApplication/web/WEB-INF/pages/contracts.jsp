@@ -9,14 +9,26 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Контракты</title>
+        
+                <script language="javascript">
+                
+function editWorker(id){
+    document.workerEditForm.action = "<%=request.getContextPath()+"/editWorker"%>"+"?id="+id+"&name="+document.workerEditForm.nameField.value;
+    document.workerEditForm.submit();
+//    window.parent.location = window.parent.location.href;
+}
+
+                </script>
+        
     </head>
     <body>
-        <form name="name" method="post" align = "center">
+        <form name="workerEditForm" method="post" align = "center">
             Текущее имя сотрудника: <input type="text" size="35"  name="nameField" value = " <%=request.getAttribute("name")%> "><br>
             Текущая фамилия сотрудника: <input type="text" size="35"  name="surnameField" value = " <%=request.getAttribute("surname")%> "><br>
             Текущее отчество сотрудника: <input type="text" size="35"  name="lastnameField" value = " <%=request.getAttribute("lastname")%> "><br>
-            
+            <input type="hidden" name="id" value=<%=  request.getAttribute("workerId") %>>
+            <input type="button" value="Удалить" onclick="editWorker( <%= request.getAttribute("workerId") %> );">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </form>
     </body>
 </html>
