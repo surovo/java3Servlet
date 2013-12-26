@@ -229,7 +229,7 @@ public class Worker implements LevyInterface , JSONObjectInterface{
         for (Iterator<JSONObject> it = jsonContracts.iterator(); it.hasNext();) {
             JSONObject c = it.next();
             AbstractContract contract;
-            if (Long.parseLong((String) c.get("id")) == 0) {
+            if (c.get("id").equals(0)) {
                 contract = new BudgetContract(c);
                 this.contractsTable.put(Long.toString(contract.getContractUniqueId()), contract);
             } else {

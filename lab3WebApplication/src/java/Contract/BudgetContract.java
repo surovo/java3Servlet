@@ -59,7 +59,7 @@ public class BudgetContract extends AbstractContract{
           this.workPlace = (String) obj.get("workPlace");
           this.post = (String) obj.get("post");
           this.validDate = (Date) obj.get("validDate");
-          this.forever = Boolean.parseBoolean( (String) obj.get("forever"));
+          this.forever = Boolean.parseBoolean(obj.get("forever").toString());
 
     }
 

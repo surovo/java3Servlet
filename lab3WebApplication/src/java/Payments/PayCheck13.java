@@ -35,8 +35,8 @@ public class PayCheck13 extends AbstractPayment{
     @Override
     public void loadParamsFromJson(JSONObject obj) {
       
-          this.paymentSum = Double.parseDouble((String) obj.get("paymentSum"));
-          this.levyValue =  Double.parseDouble((String)obj.get("levyValue"));
+          this.paymentSum = Double.valueOf(obj.get("paymentSum").toString());
+          this.levyValue =  Double.valueOf(obj.get("levyValue").toString());
           this.name = (String) obj.get("name");
           Date date;
         try {

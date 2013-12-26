@@ -55,11 +55,11 @@ public class FinanceContract extends AbstractContract{
             this.payments.add(new PayCheck13(ap));
         }
       
-          this.contractId = Long.parseLong( (String) obj.get("id"));
+          this.contractId = Long.parseLong(obj.get("id").toString());
           this.workPlace = (String) obj.get("workPlace");
           this.post = (String) obj.get("post");
           this.validDate = (Date) obj.get("validDate");
-          this.forever = Boolean.parseBoolean( (String) obj.get("forever"));
+          this.forever = Boolean.parseBoolean(obj.get("forever").toString());
     }
    
 
