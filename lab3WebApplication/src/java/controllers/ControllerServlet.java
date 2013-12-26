@@ -7,6 +7,8 @@
 package controllers;
 
 import Contract.AbstractContract;
+import Contract.BudgetContract;
+import Contract.FinanceContract;
 import Exceptions.WrongNumberValueException;
 import UFNS.UFNS;
 import Workers.Worker;
@@ -35,7 +37,8 @@ import org.json.simple.JSONObject;
             "/deleteWorker", 
             "/addWorker", 
             "/contracts",
-            "/editWorker"
+            "/editWorker",
+            "/addContract"
         })
 public class ControllerServlet extends HttpServlet {
 
@@ -188,6 +191,25 @@ public class ControllerServlet extends HttpServlet {
                     }
 
 
+        } else if (userPath.equals("/addContract")) {
+            String id = (String) request.getParameter("id");
+            String post = (String) request.getParameter("post");
+            String workplace = (String) request.getParameter("surname");
+            boolean budget = Boolean.parseBoolean(request.getParameter("budget").toString());
+            try {
+                Worker w = UFNS.getInstance().getWorkerWithId(Long.parseLong(id));
+                if (budget) {
+                    w.addContract(new BudgetContract(workplace, post));
+                } else {
+                    w.addContract(new FinanceContract(workplace, post));
+                }
+                
+            } catch (WrongNumberValueException ex) {
+                
+            } finally {
+                String url = "contracts?id="+id;
+                response.sendRedirect(url);
+            }
         }
         
     }

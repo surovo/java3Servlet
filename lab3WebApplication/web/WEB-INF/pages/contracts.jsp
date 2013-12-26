@@ -22,6 +22,11 @@ function editWorker(id){
 //    window.parent.location = window.parent.location.href;
 }
 
+function addContract(id){
+    document.newContractForm.action = "<%=request.getContextPath()+"/addContract"%>"+"?id="+id+"&post="+document.newContractForm.postField.value+"&workplace="+document.newContractForm.workplaceField.value+"&budget="+document.newContractForm.budgetFlag.checked;
+    document.newContractForm.submit();
+}
+
                 </script>
         
     </head>
@@ -35,6 +40,15 @@ function editWorker(id){
         </form>
         <br>
         
+        
+                <form name="newContractForm" method="post" align = "center">
+            Должность: <input type="text" size="35"  name="postField" ><br>
+            Место работы: <input type="text" size="35"  name="workplaceField" ><br>
+            Бюджетный<input type="checkbox" name="budgetFlag" value="ON" checked="checked" />
+            <input type="hidden" name="id" value=<%=  request.getAttribute("workerId") %>>
+            <input type="button" value="Добавить контракт" onclick="addContract( <%= request.getAttribute("workerId") %> );">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </form>
+        <br>
         
         <table width="60%" border="0" align="center" bgcolor="#eeeedd"
                    style="color: blue;font-style: oblique; border-left: solid olive; border-right: solid olive; border-bottom: solid olive; border-top: solid olive; font-weight: 700">
@@ -67,6 +81,9 @@ for (itr=data.iterator(); itr.hasNext(); )
 
 
 </table>
+
+<br>
+
         
         
     </body>
