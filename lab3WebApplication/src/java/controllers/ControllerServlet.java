@@ -38,7 +38,8 @@ import org.json.simple.JSONObject;
             "/addWorker", 
             "/contracts",
             "/editWorker",
-            "/addContract"
+            "/addContract",
+            "/deleteContract"
         })
 public class ControllerServlet extends HttpServlet {
 
@@ -167,6 +168,18 @@ public class ControllerServlet extends HttpServlet {
                     }
             String url = "workers";
             response.sendRedirect(url);
+        } else if (userPath.equals("/deleteContract")) {
+            String id = (String) request.getParameter("id");
+            String contractid = (String) request.getParameter("contractId");
+                    try {
+                        Worker w = UFNS.getInstance().getWorkerWithId(Long.parseLong(id));
+                        w.removeContractWithId(Long.parseLong(contractid));
+                        this.save();
+                    } catch (WrongNumberValueException ex) {
+                        Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+            String url = "contracts?id="+id;
+            response.sendRedirect(url);
         } else if (userPath.equals("/editWorker")) {
             String id = (String) request.getParameter("id");
             String name = (String) request.getParameter("name");
@@ -194,7 +207,7 @@ public class ControllerServlet extends HttpServlet {
         } else if (userPath.equals("/addContract")) {
             String id = (String) request.getParameter("id");
             String post = (String) request.getParameter("post");
-            String workplace = (String) request.getParameter("surname");
+            String workplace = (String) request.getParameter("workplace");
             boolean budget = Boolean.parseBoolean(request.getParameter("budget").toString());
             try {
                 Worker w = UFNS.getInstance().getWorkerWithId(Long.parseLong(id));

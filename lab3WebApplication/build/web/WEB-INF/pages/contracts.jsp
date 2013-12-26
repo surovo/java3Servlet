@@ -27,6 +27,11 @@ function addContract(id){
     document.newContractForm.submit();
 }
 
+function deleteContract(id, contractId){
+    document.forms["deleteContractForm"+contractId].action = "<%=request.getContextPath()+"/deleteContract"%>"+"?id="+id+"&contractId="+contractId;
+    document.forms["deleteContractForm"+contractId].submit();
+}
+
                 </script>
         
     </head>
@@ -74,7 +79,11 @@ for (itr=data.iterator(); itr.hasNext(); )
 <td> <%= c.getRawSummWithDate(null, null) %>  </td>
 <td> <%=  c.getRawSummWithDate(null, null) - c.getTotalWithDate(null, null) %></td>
 <td> <%= c.getTotalWithDate(null, null) %></td>
-<td>  </td>
+<td>
+        <form name="deleteContractForm<%= c.getContractUniqueId() %>" action="<%=request.getContextPath()+"/deleteContract"%>" method="post" align = "center">
+        <input type="button" value="Удалить контракт" onclick="deleteContract(<%=  request.getAttribute("workerId") %> , <%= c.getContractUniqueId() %> );">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </form>
+</td>
 <td>  </td>
 
 <%} %>
