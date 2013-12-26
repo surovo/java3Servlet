@@ -142,11 +142,7 @@ public class Worker implements LevyInterface , JSONObjectInterface{
     }
     
     public boolean isBudget() {
-        try {
-            return (this.getContractWithId(0)!=null && this.getAllContracts().size()>1);
-        } catch (WrongNumberValueException ex) {
-            return false;
-        }
+            return (!this.contractsTable.isEmpty() && this.contractsTable.size()==1 && this.contractsTable.get(Long.toString(0)) != null);
     }
     
     public long getUniqueWorkerId() {
@@ -229,7 +225,8 @@ public class Worker implements LevyInterface , JSONObjectInterface{
         for (Iterator<JSONObject> it = jsonContracts.iterator(); it.hasNext();) {
             JSONObject c = it.next();
             AbstractContract contract;
-            if (c.get("id").equals(0)) {
+            long id = Long.parseLong(c.get("id").toString());
+            if (id == 0) {
                 contract = new BudgetContract(c);
                 this.contractsTable.put(Long.toString(contract.getContractUniqueId()), contract);
             } else {

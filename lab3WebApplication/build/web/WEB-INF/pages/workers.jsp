@@ -13,7 +13,7 @@
 <html xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
-        <title>Пример веб-приложения на JSP и сервлетах</title>
+        <title>Налоговая служба (вариант 19) Козодой Иван группа В05-121</title>
 
         <script language="javascript">
                 
