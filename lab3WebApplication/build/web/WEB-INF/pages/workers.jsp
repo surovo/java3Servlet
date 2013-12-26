@@ -93,7 +93,7 @@ function showContracts(id){
     <body>
 
 <form name="newWorkerForm" action="<%=request.getContextPath()+"/addWorker"%>" method="post" align = "center">
-    Имя нового сотрудника: <input type="text" size="35"  name="nameField">
+    Имя нового сотрудника: <input type="text" size="35"  name="nameField" value = >
     <input type="button" value="Добавить запись" onclick="checkNameAndAdd();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </form>
 
@@ -131,7 +131,7 @@ for (itr=data.iterator(); itr.hasNext(); )
 
     <form name="contractsForm<%= w.getUniqueWorkerId() %>" action="<%=request.getContextPath()+"/contracts"%>" method="get" align = "center">
         <!--<input type="button" value="ghfdbnm" onclick="makeRequest(' <%= request.getContextPath()+"/deleteWorker" %> ' , ' <%= w.getUniqueWorkerId() %> ' , null );">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-        <input type="button" value="Удалить" onclick="showContracts( <%=  w.getUniqueWorkerId() %> );">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="button" value="Править" onclick="showContracts( <%=  w.getUniqueWorkerId() %> );">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <input type="hidden" name="id" value=<%=  w.getUniqueWorkerId() %>>
     </form>
 

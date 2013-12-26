@@ -10,11 +10,10 @@ import Contract.AbstractContract;
 import Exceptions.WrongNumberValueException;
 import UFNS.UFNS;
 import Workers.Worker;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -24,6 +23,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -102,9 +102,14 @@ public class ControllerServlet extends HttpServlet {
                ArrayList<AbstractContract> contracts;
             try {
                 contracts = new ArrayList(UFNS.getInstance().getAllContractsForWorkerWithId(Long.parseLong(id)));
+                Worker w = UFNS.getInstance().getWorkerWithId(Long.parseLong(id));
                 ServletContext sc = getServletContext();
                 RequestDispatcher rd = sc.getRequestDispatcher(userPath);
                 request.setAttribute("contractsList", contracts );
+                request.setAttribute("workerId", id);
+                request.setAttribute("name", w.getWorkerName());
+                request.setAttribute("surname", w.getWorkerSurName());
+                request.setAttribute("lastname",w.getWorkerLastName());
             } catch (WrongNumberValueException ex) {
                 Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -182,4 +187,23 @@ public class ControllerServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    
+    @Override
+    public void destroy(){
+                    String filePath;
+                    filePath = "/Users/ivan/Desktop/ufns.json";
+                    JSONObject obj = UFNS.getInstance().getJSONObject();
+                    try {
+
+                            FileWriter file = new FileWriter(filePath);
+                            file.write(obj.toJSONString());
+                            file.flush();
+                            file.close();
+
+                    } catch (IOException ex) {
+                            ex.printStackTrace();
+                    } finally {
+                        super.destroy();
+                    }
+    }
 }

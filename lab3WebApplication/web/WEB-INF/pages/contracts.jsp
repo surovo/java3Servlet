@@ -12,6 +12,11 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <form name="name" method="post" align = "center">
+            Текущее имя сотрудника: <input type="text" size="35"  name="nameField" value = " <%=request.getAttribute("name")%> "><br>
+            Текущая фамилия сотрудника: <input type="text" size="35"  name="surnameField" value = " <%=request.getAttribute("surname")%> "><br>
+            Текущее отчество сотрудника: <input type="text" size="35"  name="lastnameField" value = " <%=request.getAttribute("lastname")%> "><br>
+            
+        </form>
     </body>
 </html>
