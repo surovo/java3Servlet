@@ -16,10 +16,54 @@
         <title>Пример веб-приложения на JSP и сервлетах</title>
 
         <script language="javascript">
+         
+    
+        function makeRequest(url,nz,tgt)
+        {
+
+	var httpRequest;
+
+	if (window.XMLHttpRequest) { // Mozilla, Safari, ...
+		httpRequest = new XMLHttpRequest();
+		if (httpRequest.overrideMimeType) {
+			httpRequest.overrideMimeType('text/xml');
+					}
+	}
+	else if (window.ActiveXObject) { // IE
+		try {
+			httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+		}
+		catch (e) {
+			try {
+				httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			catch (e) {}
+		}
+	}
+
+	if ((httpRequest==null)||(httpRequest==undefined)) {
+		tgt.innerHTML='Невозможно создать XML-объект!';
+		return false;
+	}
+
+	httpRequest.onreadystatechange = function() { alertContents(httpRequest,tgt); };
+	httpRequest.open('GET', url+'?id='+nz, true);
+	httpRequest.send('');
+
+}
+/* Значения readyState
+0 (Неинициализирован)
+1 (Инициализирован)
+2 (Отправлен)
+3 (Загружается)
+4 (Загружен)
+ */
             
-function deleteWorker(id){
-    document.deleteWorkerForm.action = "<%=request.getContextPath()+"/deleteWorker"%>"+"?id="+id;
-    document.deleteWorkerForm.submit();
+function deleteWorker(id, form){
+    document.forms["deleteWorkerForm"+id].action = "<%=request.getContextPath()+"/deleteWorker"%>"+"?id="+id;
+    document.forms["deleteWorkerForm"+id].submit();
+//    document.deleteWorkerForm.action = "<%=request.getContextPath()+"/deleteWorker"%>"+"?id="+id;
+//    document.deleteWorkerForm.submit();
 }
 
 function checkNameAndAdd()
@@ -38,9 +82,9 @@ function chkEdit()
                  return true;
 }
 
-function goToContracts(id) {
-    document.contractsForm.action = "<%=request.getContextPath()+"/contracts"%>"+"?id="+id;
-    document.contractsForm.submit();
+function showContracts(id){
+//    document.forms["contractsForm"+id].action = "<%=request.getContextPath()+"/contracts"%>"+id;
+    document.forms["contractsForm"+id].submit();
 }
 
         </script>
@@ -65,8 +109,8 @@ function goToContracts(id) {
         <td>Всего выплат</td>
         <td>Всего Налогов</td>
         <td>Итого</td>
-        <td>Действие</td>
         <td>Правка и контракты</td>
+        <td>Действие</td>
     </tr>
 <%Iterator itr;%>
 <% ArrayList data= (ArrayList)request.getAttribute("accountList");
@@ -85,20 +129,20 @@ for (itr=data.iterator(); itr.hasNext(); )
 <td><%= w.getTotalWithDate(null, null) %> </td>
 <td>
 
-    <form name="deleteWorkerForm" action="<%=request.getContextPath()+"/deleteWorker"%>" method="post" align = "center">
+    <form name="contractsForm<%= w.getUniqueWorkerId() %>" action="<%=request.getContextPath()+"/contracts"%>" method="get" align = "center">
+        <!--<input type="button" value="ghfdbnm" onclick="makeRequest(' <%= request.getContextPath()+"/deleteWorker" %> ' , ' <%= w.getUniqueWorkerId() %> ' , null );">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+        <input type="button" value="Удалить" onclick="showContracts( <%=  w.getUniqueWorkerId() %> );">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="hidden" name="id" value=<%=  w.getUniqueWorkerId() %>>
+    </form>
+
+</td>
+<td>
+
+    <form name="deleteWorkerForm<%= w.getUniqueWorkerId() %>" action="<%=request.getContextPath()+"/deleteWorker"%>" method="post" align = "center">
         <input type="button" value="Удалить" onclick="deleteWorker( <%= w.getUniqueWorkerId() %> );">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     </form>
 
 </td>
-
-<td>
-
-    <form name="contractsForm" action="<%=request.getContextPath()+"/contracts"%>" method="get" align = "center">
-        <input type="button" value="Перейти к контрактам" onclick="goToContracts( <%= w.getUniqueWorkerId() %> );">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    </form>
-
-</td>
-
 </tr>
 <%} %>
 

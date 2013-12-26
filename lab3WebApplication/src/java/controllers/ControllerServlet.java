@@ -6,12 +6,14 @@
 
 package controllers;
 
+import Contract.AbstractContract;
 import Exceptions.WrongNumberValueException;
 import UFNS.UFNS;
 import Workers.Worker;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -78,18 +80,28 @@ public class ControllerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String userPath = request.getServletPath();
-         // if category page is requested
-        if (userPath.equals("/index")) {
-            // TODO: Implement category request
-
+         
         // if cart page is requested
-        } else if (userPath.equals("/workers")) {
+        if (userPath.equals("/workers")) {
                ArrayList<Worker> accounts = new ArrayList(UFNS.getInstance().getAllWorkers());
                ServletContext sc = getServletContext();
                RequestDispatcher rd = sc.getRequestDispatcher(userPath);
                request.setAttribute("accountList", accounts );
         } else if (userPath.equals("/contracts")) {
-               String name = (String) request.getParameter("id"); 
+               String id;
+               id = request.getQueryString();
+               id = id.replaceAll("id=", "");
+               ArrayList<AbstractContract> contracts;
+            try {
+                contracts = new ArrayList(UFNS.getInstance().getAllContractsForWorkerWithId(Long.parseLong(id)));
+                ServletContext sc = getServletContext();
+                RequestDispatcher rd = sc.getRequestDispatcher(userPath);
+                request.setAttribute("contractsList", contracts );
+            } catch (WrongNumberValueException ex) {
+                Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+               
+               
         } 
 
         // use RequestDispatcher to forward request internally
