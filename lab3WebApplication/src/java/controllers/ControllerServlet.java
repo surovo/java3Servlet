@@ -167,18 +167,24 @@ public class ControllerServlet extends HttpServlet {
         } else if (userPath.equals("/editWorker")) {
             String id = (String) request.getParameter("id");
             String name = (String) request.getParameter("name");
+            String surname = (String) request.getParameter("surname");
+            String lastname = (String) request.getParameter("lastname");
                     try {
                         Worker w = UFNS.getInstance().getWorkerWithId(Long.parseLong(id));
                         w.setWorkerName(name);
+                        w.setWorkerSurName(surname);
+                        w.setWorkerLastName(lastname);
                         this.save();
                         ArrayList<AbstractContract> contracts;
                         contracts = new ArrayList(UFNS.getInstance().getAllContractsForWorkerWithId(Long.parseLong(id)));
                         ServletContext sc = getServletContext();
                         RequestDispatcher rd = sc.getRequestDispatcher(userPath);
-                        String url = "contracts?id="+id;
-                        response.sendRedirect(url);
+                        
                     } catch (WrongNumberValueException ex) {
                         Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    } finally {
+                        String url = "contracts?id="+id;
+                        response.sendRedirect(url);
                     }
 
 

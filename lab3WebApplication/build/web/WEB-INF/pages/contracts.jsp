@@ -14,7 +14,7 @@
                 <script language="javascript">
                 
 function editWorker(id){
-    document.workerEditForm.action = "<%=request.getContextPath()+"/editWorker"%>"+"?id="+id+"&name="+document.workerEditForm.nameField.value;
+    document.workerEditForm.action = "<%=request.getContextPath()+"/editWorker"%>"+"?id="+id+"&name="+document.workerEditForm.nameField.value+"&surname="+document.workerEditForm.surnameField.value+"&lastname="+document.workerEditForm.lastnameField.value;
     document.workerEditForm.submit();
 //    window.parent.location = window.parent.location.href;
 }
@@ -28,7 +28,7 @@ function editWorker(id){
             Текущая фамилия сотрудника: <input type="text" size="35"  name="surnameField" value = " <%=request.getAttribute("surname")%> "><br>
             Текущее отчество сотрудника: <input type="text" size="35"  name="lastnameField" value = " <%=request.getAttribute("lastname")%> "><br>
             <input type="hidden" name="id" value=<%=  request.getAttribute("workerId") %>>
-            <input type="button" value="Удалить" onclick="editWorker( <%= request.getAttribute("workerId") %> );">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="button" value="Принять исправления" onclick="editWorker( <%= request.getAttribute("workerId") %> );">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </form>
     </body>
 </html>

@@ -78,9 +78,9 @@ for (itr=data.iterator(); itr.hasNext(); )
 <% Worker w = (Worker)itr.next(); %>
 <tr>
 <td> <%= w.getUniqueWorkerId() %></td>
-<td> <input  type =   "text" name = "surname" value = <%= w.getWorkerSurName() %>  ></td>
-<td> <input  type =   "text" name = "name" value = <%= w.getWorkerName() %>  ></td>
-<td> <input  type =   "text" name = "lastname" value = <%= w.getWorkerLastName() %>  ></td>
+<td>  <%= w.getWorkerSurName() %>  </td>
+<td> <%= w.getWorkerName() %> </td>
+<td> <%= w.getWorkerLastName() %>  </td>
 <td> <%= w.getType() %></td>
 <td> <%= w.getRawSummWithDate(null, null) %></td>
 <td> <%= w.getLevy() %></td>
