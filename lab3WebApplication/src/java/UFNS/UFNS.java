@@ -18,6 +18,8 @@ import Contract.AbstractContract;
 import Exceptions.WrongNumberValueException;
 import Payments.AbstractPayment;
 import Payments.PayCheck13;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -46,6 +48,11 @@ public class UFNS extends Observable implements  JSONObjectInterface{
                 localInstance = instance;
                 if (localInstance == null) {
                     instance = localInstance = new UFNS();
+                    try {
+                        instance.readFromJSON("/Users/ivan/Desktop/ufns.json");
+                    } catch (WrongNumberValueException ex) {
+                        
+                    }
                 }
             }
         }

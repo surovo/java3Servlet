@@ -84,14 +84,14 @@ public class ControllerServlet extends HttpServlet {
         // if cart page is requested
         if (userPath.equals("/workers")) {
                ArrayList<Worker> accounts = new ArrayList(UFNS.getInstance().getAllWorkers());
-               if(accounts.isEmpty()) {
-                   try {
-                       UFNS.getInstance().readFromJSON("/Users/ivan/Desktop/ufns.json");
-                       accounts = new ArrayList(UFNS.getInstance().getAllWorkers());
-                   } catch (WrongNumberValueException ex) {
-                       
-                   }
-               }
+//               if(accounts.isEmpty()) {
+//                   try {
+//                       UFNS.getInstance().readFromJSON("/Users/ivan/Desktop/ufns.json");
+//                       accounts = new ArrayList(UFNS.getInstance().getAllWorkers());
+//                   } catch (WrongNumberValueException ex) {
+//                       
+//                   }
+//               }
                ServletContext sc = getServletContext();
                RequestDispatcher rd = sc.getRequestDispatcher(userPath);
                request.setAttribute("accountList", accounts );
